@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Edwin A — DevOps Lead & Platform Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────────── */
+:root {
+  --bg:        #07090C;
+  --bg2:       #0A0D12;
+  --bg3:       #0E1319;
+  --panel:     #111820;
+  --panel2:    #141D27;
+  --border:    #1A2535;
+  --border2:   #243447;
+
+  --teal:      #0CCEC0;
+  --teal-dim:  rgba(12,206,192,0.12);
+  --teal-faint:rgba(12,206,192,0.05);
+  --blue:      #3F8EF5;
+  --amber:     #E8A838;
+  --green:     #3DD68C;
+
+  --text:      #DCE8F0;
+  --text2:     #A8BCC8;
+  --muted:     #607080;
+  --dim:       #344455;
+
+  --serif: 'Instrument Serif', Georgia, serif;
+  --mono:  'Geist Mono', 'JetBrains Mono', monospace;
+  --sans:  'Geist', system-ui, sans-serif;
+
+  --radius: 2px;
+  --t: 0.22s ease;
+}
+
+/* ─────────────────────────────────────────────
+   RESET
+───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* subtle grain */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 1; }
+
+/* ─────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(7,9,12,0.82);
+  backdrop-filter: blur(16px) saturate(1.3);
+  border-bottom: 1px solid var(--border);
+  transition: background var(--t);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--teal);
+  letter-spacing: 0.04em;
+}
+.nav-logo span { color: var(--muted); }
+.nav-links {
+  display: flex; gap: 28px; align-items: center;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color var(--t);
+}
+.nav-links a:hover { color: var(--text2); }
+.nav-hire {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--teal);
+  border: 1px solid rgba(12,206,192,0.35);
+  padding: 6px 14px;
+  transition: background var(--t), color var(--t);
+}
+.nav-hire:hover { background: var(--teal); color: var(--bg); }
+
+/* ─────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* grid */
+#hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(12,206,192,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(12,206,192,0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black 0%, transparent 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+}
+.glow-a {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(12,206,192,0.055) 0%, transparent 70%);
+  top: -120px; right: -80px;
+}
+.glow-b {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(63,142,245,0.04) 0%, transparent 70%);
+  bottom: 80px; left: 0px;
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 72px;
+  align-items: center;
+  width: 100%;
+}
+
+/* left */
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--teal);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(52px, 6.5vw, 86px);
+  font-weight: 400;
+  line-height: 1.0;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.hero-name em {
+  font-style: italic;
+  color: var(--teal);
+}
+
+.hero-tagline {
+  font-family: var(--sans);
+  font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 400;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.hero-tagline span { color: var(--border2); margin: 0 6px; }
+
+.hero-desc {
+  font-size: 15px;
+  color: var(--text2);
+  max-width: 480px;
+  line-height: 1.85;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
+.btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 11px 24px;
+  transition: all var(--t);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-fill {
+  background: var(--teal);
+  color: var(--bg);
+}
+.btn-fill:hover { background: #0ab5a9; transform: translateY(-1px); }
+.btn-ghost {
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+.btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+.hero-bar {
+  display: flex; gap: 40px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+.bar-item { display: flex; flex-direction: column; gap: 3px; }
+.bar-num {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-style: italic;
+  color: var(--teal);
+  line-height: 1;
+}
+.bar-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* right — card */
+.hero-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 28px;
+  position: relative;
+}
+/* corner accents */
+.hero-card::before, .hero-card::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  border-color: var(--teal);
+  border-style: solid;
+}
+.hero-card::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+.hero-card::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+.card-photo {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.card-photo img { width: 100%; height: auto; display: block; }
+.card-photo-placeholder {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.card-photo-placeholder .ico { font-size: 36px; margin-bottom: 8px; opacity: 0.25; display: block; }
+
+.card-rows { display: flex; flex-direction: column; gap: 10px; }
+.card-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+}
+.crow-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.crow-val   { font-family: var(--mono); font-size: 11px; color: var(--text); }
+.crow-val.accent { color: var(--teal); }
+.crow-val.amber  { color: var(--amber); }
+
+/* ─────────────────────────────────────────────
+   SECTIONS — SHARED
+───────────────────────────────────────────── */
+section { padding: 96px 0; }
+
+.sec-eyebrow {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--teal);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-eyebrow::after {
+  content: '';
+  flex: 0 0 48px; height: 1px;
+  background: var(--border2);
+}
+
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.8vw, 46px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+h2 em { font-style: italic; color: var(--teal); }
+
+/* ─────────────────────────────────────────────
+   ABOUT
+───────────────────────────────────────────── */
+#about { background: var(--bg2); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+  margin-top: 52px;
+}
+
+.about-body p {
+  color: var(--text2);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.9;
+  margin-bottom: 18px;
+}
+.about-body p strong { color: var(--text); font-weight: 500; }
+
+.cert-block {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 28px;
+  padding: 16px 20px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--amber);
+}
+.cert-ico { font-size: 22px; }
+.cert-name { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--text); }
+.cert-sub  { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.08em; margin-top: 2px; text-transform: uppercase; }
+
+/* stats */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat {
+  padding: 22px 20px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  transition: border-color var(--t), transform var(--t);
+  position: relative;
+  overflow: hidden;
+}
+.stat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, var(--teal), transparent);
+  opacity: 0; transition: opacity var(--t);
+}
+.stat:hover { border-color: var(--border2); transform: translateY(-2px); }
+.stat:hover::before { opacity: 1; }
+.stat-n {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-style: italic;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-d { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
+
+/* ─────────────────────────────────────────────
+   SKILLS
+───────────────────────────────────────────── */
+#skills { background: var(--bg); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 48px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.sg {
+  background: var(--panel);
+  padding: 22px 20px;
+  transition: background var(--t);
+}
+.sg:hover { background: var(--panel2); }
+.sg-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--teal);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.tag-list { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  transition: color var(--t), border-color var(--t);
+  cursor: default;
+}
+.tag:hover { color: var(--text2); border-color: var(--border2); }
+.tag-hi {
+  color: var(--teal);
+  border-color: rgba(12,206,192,0.25);
+  background: var(--teal-faint);
+}
+
+/* ─────────────────────────────────────────────
+   EXPERIENCE
+───────────────────────────────────────────── */
+#experience { background: var(--bg2); }
+
+.timeline { margin-top: 52px; }
+.job { 
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 40px;
+  padding: 36px 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.job:last-child { border-bottom: 1px solid var(--border); }
+
+.job-left { padding-top: 2px; }
+.job-period {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  display: block;
+}
+.job-co {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--teal);
+  margin-bottom: 4px;
+  display: block;
+}
+.job-loc {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.job-active {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.job-active::before {
+  content: '';
+  width: 5px; height: 5px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.job-right {}
+.job-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+.job-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  margin-bottom: 18px;
+  font-style: italic;
+  line-height: 1.5;
+}
+.job-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.job-list li {
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.7;
+  padding-left: 18px;
+  position: relative;
+  font-weight: 300;
+}
+.job-list li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--border2);
+  font-size: 12px;
+}
+.job-list li strong { color: var(--text); font-weight: 500; }
+.num { color: var(--teal); font-family: var(--mono); font-size: 12px; font-weight: 400; }
+code.inline {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  background: var(--teal-faint);
+  border: 1px solid rgba(12,206,192,0.18);
+  padding: 1px 6px;
+}
+
+/* ─────────────────────────────────────────────
+   HERO CANVAS PARALLAX
+───────────────────────────────────────────── */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+/* ─────────────────────────────────────────────
+   PROJECTS
+───────────────────────────────────────────── */
+#projects { background: var(--bg); }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+.proj {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 0;
+  display: flex; flex-direction: column;
+  transition: border-color var(--t), transform var(--t);
+  position: relative;
+  overflow: hidden;
+}
+.proj::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.proj:hover { border-color: var(--border2); transform: translateY(-3px); }
+.proj:hover::after { transform: scaleX(1); }
+
+/* project visual banner */
+.proj-visual {
+  width: 100%;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg3);
+}
+.proj-visual svg {
+  width: 100%; height: 100%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.proj:hover .proj-visual svg { transform: scale(1.04); }
+.proj-visual-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--panel) 100%);
+  pointer-events: none;
+}
+
+.proj-body {
+  padding: 20px 22px 24px;
+  display: flex; flex-direction: column;
+  flex: 1;
+}
+
+.proj-num {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+.proj-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+.proj-desc {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 300;
+  line-height: 1.75;
+  flex: 1;
+  margin-bottom: 18px;
+}
+.proj-pills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+.pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--teal);
+  background: var(--teal-faint);
+  border: 1px solid rgba(12,206,192,0.2);
+  padding: 2px 8px;
+  letter-spacing: 0.05em;
+}
+.proj-stack { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 20px; }
+.stk {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  letter-spacing: 0.04em;
+}
+.proj-link {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: color var(--t);
+  margin-top: auto;
+  display: flex; align-items: center; gap: 5px;
+}
+.proj-link:hover { color: var(--teal); }
+.proj-link::after { content: '↗'; }
+
+/* ─────────────────────────────────────────────
+   IMPACT
+───────────────────────────────────────────── */
+#impact { background: var(--bg2); }
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 48px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.imp {
+  background: var(--panel);
+  padding: 28px 24px;
+  border-left: 2px solid transparent;
+  transition: border-left-color var(--t), background var(--t);
+  cursor: default;
+}
+.imp:hover { border-left-color: var(--teal); background: var(--panel2); }
+.imp-n {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-style: italic;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.imp-what { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.imp-how  { font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+
+/* ─────────────────────────────────────────────
+   CONTACT
+───────────────────────────────────────────── */
+#contact { background: var(--bg); }
+
+.contact-wrap {
+  max-width: 680px;
+  margin: 52px auto 0;
+}
+.terminal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.t-bar {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  padding: 9px 14px;
+  display: flex; align-items: center; gap: 7px;
+}
+.d { width: 9px; height: 9px; border-radius: 50%; }
+.d.r { background: #C0392B; opacity: 0.7; }
+.d.y { background: #D4AC0D; opacity: 0.7; }
+.d.g { background: #1E8449; opacity: 0.7; }
+.t-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-left: 6px;
+  letter-spacing: 0.06em;
+}
+.t-body { padding: 28px 30px 32px; }
+.tl {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 2.1;
+  color: var(--muted);
+}
+.tl .pr  { color: var(--green); }
+.tl .cm  { color: var(--text); }
+.tl .k   { color: var(--blue); }
+.tl .v   { color: var(--amber); }
+.tl .v a { color: var(--amber); text-decoration: none; }
+.tl .v a:hover { text-decoration: underline; }
+.tl .c   { color: var(--dim); }
+.cursor {
+  display: inline-block; width: 7px; height: 13px;
+  background: var(--teal);
+  vertical-align: middle;
+  animation: blink 1.2s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ft-l { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: 0.08em; }
+.ft-l span { color: var(--muted); }
+.ft-r { font-family: var(--mono); font-size: 10px; color: var(--dim); }
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.08s; }
+.d2 { transition-delay: 0.16s; }
+.d3 { transition-delay: 0.24s; }
+.d4 { transition-delay: 0.32s; }
+
+/* ─────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .wrap { padding: 0 24px; }
+  nav { padding: 0 24px; }
+  .hero-layout { grid-template-columns: 1fr; }
+  .hero-card { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .impact-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .job { grid-template-columns: 1fr; gap: 12px; }
+  .job-left { padding: 0; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
+  .hero-bar { flex-wrap: wrap; gap: 24px; }
+}
+@media (max-width: 600px) {
+  section { padding: 72px 0; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .impact-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 8px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────── -->
+<nav>
+  <div class="nav-logo"><span>~/</span>edwin-a</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Stack</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="mailto:edwinkerk1@gmail.com" class="nav-hire">Hire me</a>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-glow glow-a"></div>
+  <div class="hero-glow glow-b"></div>
+  <div class="wrap">
+    <div class="hero-layout">
+
+      <div class="hero-content reveal">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          Available for remote roles
+        </div>
+
+        <h1 class="hero-name">
+          I'm Edwin.<br/>
+          I build<br/>
+          <em>infrastructure</em><br/>
+          that holds.
+        </h1>
+
+        <div class="hero-tagline">
+          DevOps Lead <span>·</span> Platform Engineering <span>·</span> SRE <span>·</span> DevSecOps
+        </div>
+
+        <p class="hero-desc">
+          I build the platforms teams rely on when things go sideways —
+          Kubernetes clusters that don't fall over, compliance pipelines
+          that run themselves, and AI tooling that works fully offline.
+          Based in Coimbatore, open to remote or relocation.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#projects" class="btn btn-fill">View projects</a>
+          <a href="mailto:edwinkerk1@gmail.com" class="btn btn-ghost">Get in touch</a>
+        </div>
+
+        <div class="hero-bar">
+          <div class="bar-item">
+            <span class="bar-num">5+</span>
+            <span class="bar-lbl">Years hands-on</span>
+          </div>
+          <div class="bar-item">
+            <span class="bar-num">99.9%</span>
+            <span class="bar-lbl">Cluster uptime</span>
+          </div>
+          <div class="bar-item">
+            <span class="bar-num">70%</span>
+            <span class="bar-lbl">Audit effort cut</span>
+          </div>
+          <div class="bar-item">
+            <span class="bar-num">100%</span>
+            <span class="bar-lbl">AI SaaS replaced</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- card -->
+      <div class="hero-card reveal d2">
+        <div class="card-photo" id="photoFrame">
+          <img src="Edwinphoto.jpg" alt="Edwin A" />
+        </div>
+        <div class="card-rows">
+          <div class="card-row">
+            <span class="crow-label">Status</span>
+            <span class="crow-val accent">Open to work</span>
+          </div>
+          <div class="card-row">
+            <span class="crow-label">Location</span>
+            <span class="crow-val">Coimbatore, India</span>
+          </div>
+          <div class="card-row">
+            <span class="crow-label">Cert</span>
+            <span class="crow-val amber">AWS Solutions Architect</span>
+          </div>
+          <div class="card-row">
+            <span class="crow-label">Preference</span>
+            <span class="crow-val">Remote / Relocation</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ─────────────────────────────────── -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-eyebrow reveal">About</div>
+    <h2 class="reveal">What I do &amp;<br/><em>why it matters</em></h2>
+
+    <div class="about-grid">
+      <div class="about-body reveal d1">
+        <p>
+          My work sits at the intersection of <strong>platform reliability, security compliance,
+          and developer velocity.</strong> The last few years have mostly been about helping teams
+          move from quarterly compliance fire-drills to automated pipelines that run every day,
+          with dashboards engineers actually look at.
+        </p>
+        <p>
+          One thing I'm particularly proud of: I deployed a <strong>fully air-gapped, CPU-only LLM</strong>
+          (llama.cpp + MCP + RAG) on existing hardware that replaced ChatGPT and Copilot for
+          100+ engineers — no GPU, no cloud API, no SaaS spend. It also cut MTTR by 35%
+          by letting engineers query Kubernetes and Jira in plain English during incidents.
+        </p>
+        <p>
+          I've led teams of up to 6, owned production on-call for a <strong>1M+ DAU platform,</strong>
+          and shipped CI/CD templates that every project at DevOpsLabs now pulls in automatically.
+        </p>
+        <div class="cert-block">
+          <div class="cert-ico">🏅</div>
+          <div>
+            <div class="cert-name">AWS Certified Solutions Architect</div>
+            <div class="cert-sub">Amazon Web Services · Associate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid reveal d2">
+        <div class="stat"><div class="stat-n">70%</div><div class="stat-d">Less compliance audit effort</div></div>
+        <div class="stat"><div class="stat-n">50%</div><div class="stat-d">Downtime reduction</div></div>
+        <div class="stat"><div class="stat-n">73%</div><div class="stat-d">Faster CI/CD pipelines</div></div>
+        <div class="stat"><div class="stat-n">35%</div><div class="stat-d">Lower MTTR with AI assist</div></div>
+        <div class="stat"><div class="stat-n">45%</div><div class="stat-d">Fewer vulnerabilities</div></div>
+        <div class="stat"><div class="stat-n">500+</div><div class="stat-d">Containers in production</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────── -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-eyebrow reveal">Stack</div>
+    <h2 class="reveal">Tools &amp; <em>technologies</em></h2>
+
+    <div class="skills-grid reveal d1">
+      <div class="sg">
+        <div class="sg-title">☁️ Cloud</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">AWS</span>
+          <span class="tag tag-hi">EC2</span>
+          <span class="tag">S3</span>
+          <span class="tag">RDS</span>
+          <span class="tag">IAM</span>
+          <span class="tag">VPC</span>
+          <span class="tag">Route 53</span>
+          <span class="tag">CloudWatch</span>
+          <span class="tag">CloudTrail</span>
+          <span class="tag">ACM</span>
+          <span class="tag">OpenStack</span>
+          <span class="tag">OpenShift</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">⚙️ Containers & Orchestration</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">Kubernetes</span>
+          <span class="tag tag-hi">Docker</span>
+          <span class="tag">Podman</span>
+          <span class="tag">Helm</span>
+          <span class="tag">kubeadm</span>
+          <span class="tag">k3s</span>
+          <span class="tag">HA Multi-Master</span>
+          <span class="tag">kube-bench</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">🏗️ Infrastructure as Code</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">Terraform</span>
+          <span class="tag">Ansible</span>
+          <span class="tag tag-hi">GitOps</span>
+          <span class="tag">ArgoCD</span>
+          <span class="tag">Helm</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">🚀 CI/CD</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">GitLab CI/CD</span>
+          <span class="tag">Jenkins</span>
+          <span class="tag">Bitbucket Pipelines</span>
+          <span class="tag">SonarQube</span>
+          <span class="tag">Nexus Artifactory</span>
+          <span class="tag">Maven</span>
+          <span class="tag">Gradle</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">🔒 Security & Compliance</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">DevSecOps</span>
+          <span class="tag">OpenSCAP</span>
+          <span class="tag">kube-bench</span>
+          <span class="tag">Trivy</span>
+          <span class="tag">Nessus</span>
+          <span class="tag">CIS Benchmarks</span>
+          <span class="tag">TRGM</span>
+          <span class="tag">IM8</span>
+          <span class="tag">Zero Trust</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">📊 Observability & SRE</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">Prometheus</span>
+          <span class="tag tag-hi">Grafana</span>
+          <span class="tag">ELK Stack</span>
+          <span class="tag">AppDynamics</span>
+          <span class="tag">Sensu-Go</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">🤖 AI & LLM Infrastructure</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">llama.cpp</span>
+          <span class="tag tag-hi">MCP</span>
+          <span class="tag tag-hi">RAG</span>
+          <span class="tag">Qwen</span>
+          <span class="tag">Phi-4-Mini</span>
+          <span class="tag">Ollama</span>
+          <span class="tag">Air-Gapped LLM</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">💻 Programming</div>
+        <div class="tag-list">
+          <span class="tag tag-hi">Python</span>
+          <span class="tag tag-hi">Bash / Shell</span>
+          <span class="tag">Groovy</span>
+          <span class="tag">Ruby</span>
+        </div>
+      </div>
+      <div class="sg">
+        <div class="sg-title">🗄️ Databases & ITSM</div>
+        <div class="tag-list">
+          <span class="tag">MySQL (SSL/TLS)</span>
+          <span class="tag">Amazon RDS</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Jira Automation</span>
+          <span class="tag">Confluence</span>
+          <span class="tag">Bitbucket</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ────────────────────────────── -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-eyebrow reveal">Experience</div>
+    <h2 class="reveal">Where I've <em>worked</em></h2>
+
+    <div class="timeline">
+
+      <div class="job reveal d1">
+        <div class="job-left">
+          <span class="job-period">Jun 2024 – Present</span>
+          <span class="job-co">DevOpsLabs</span>
+          <span class="job-loc">Coimbatore, India</span>
+          <span class="job-active">Current role</span>
+        </div>
+        <div class="job-right">
+          <div class="job-title">DevOps Lead</div>
+          <div class="job-note">Aug 2023 – May 2024: Independent AI Infrastructure R&amp;D — open-sourced tooling later adopted here</div>
+          <ul class="job-list">
+            <li>Built MCP + RAG system connecting Jira and Kubernetes to a local LLM — engineers triage incidents in plain English; MTTR down <span class="num">35%</span></li>
+            <li>Mapped <span class="num">120+</span> CIS controls to TRGM and IM8 on AWS with real-time Grafana dashboards — audit prep time down <span class="num">60%</span></li>
+            <li>Automated compliance across <span class="num">300+</span> controls spanning OpenStack, Kubernetes, and MySQL — <span class="num">70%</span> less manual audit effort per cycle</li>
+            <li>Built a GitLab <strong>CI/CD Center of Excellence</strong> — central template repo, single <code class="inline">include:</code> call; security gates and deploy stages propagate to every project automatically</li>
+            <li>SonarQube gates on every CI/CD merge across <span class="num">15+</span> microservices — vulnerabilities down <span class="num">45%</span> in two quarters</li>
+            <li>Packaged compliance conformance pack as a Docker image; built a full Podman Compose stack for an air-gapped client in under an hour — handled offline deps, local registry refs, server time offset</li>
+            <li>Deployed air-gapped LLM (llama.cpp + Qwen + Phi-4-Mini) on CPU servers for <span class="num">100+</span> users — eliminated <span class="num">100%</span> of AI SaaS costs</li>
+            <li>HA Kubernetes from scratch: multi-master topology, OpenShift, HAProxy, Helm lifecycle — <span class="num">99.9%</span> uptime across <span class="num">500+</span> containers since launch</li>
+            <li>Led <span class="num">6</span> engineers; onboarded 4 juniors to Kubernetes and GitOps — onboarding time roughly halved</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job reveal d2">
+        <div class="job-left">
+          <span class="job-period">Jul 2021 – Jul 2023</span>
+          <span class="job-co">CloudArmee · Whatfix</span>
+          <span class="job-loc">Bangalore, India</span>
+        </div>
+        <div class="job-right">
+          <div class="job-title">Site Reliability Engineer</div>
+          <ul class="job-list">
+            <li>On-call for a <span class="num">1M+</span> DAU platform — production downtime reduced <span class="num">50%</span> over two years through runbook improvements and better alerting</li>
+            <li>Rebuilt CI/CD with Kubernetes + Jenkins + Ansible — deployments went from <span class="num">45 mins → 12 mins</span></li>
+            <li>EC2 sizing and autoscaling tuning improved application response time by <span class="num">20%</span> without meaningful cost increase</li>
+            <li>Maintained AppDynamics, Sensu-Go, Prometheus, Grafana; authored the on-call runbooks still in use today</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job reveal d3">
+        <div class="job-left">
+          <span class="job-period">Jul 2021 – Jul 2023</span>
+          <span class="job-co">CloudArmee · Nuveda</span>
+          <span class="job-loc">Coimbatore, India</span>
+        </div>
+        <div class="job-right">
+          <div class="job-title">Site Reliability Engineer</div>
+          <ul class="job-list">
+            <li>Built Prometheus + Grafana + ELK monitoring from scratch across <span class="num">30+</span> EC2 instances — issue detection time down <span class="num">40%</span></li>
+            <li>Cross-region S3 replication as DR backbone — passed all business continuity audits, met RTO/RPO targets</li>
+            <li>Zero critical CIS findings over 24 months of quarterly CloudWatch/CloudTrail audits</li>
+            <li>Git workflow and code review across <span class="num">5+</span> teams; led P1/P2 incident escalation calls</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job reveal d4">
+        <div class="job-left">
+          <span class="job-period">Sep 2023 – May 2024</span>
+          <span class="job-co">Freelance</span>
+          <span class="job-loc">Salem, India</span>
+        </div>
+        <div class="job-right">
+          <div class="job-title">DevOps Consultant</div>
+          <ul class="job-list">
+            <li>Delivered full AWS setup for Australian client — EKS cluster, API Gateway for microservices, Route 53 DNS. Production-ready, documented, on time.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ──────────────────────────────── -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-eyebrow reveal">Projects</div>
+    <h2 class="reveal">Things I've <em>built</em></h2>
+
+    <div class="projects-grid">
+      <div class="proj reveal d1">
+        <!-- AI Assistant Visual: terminal + LLM query -->
+        <div class="proj-visual">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="180" fill="#070C10"/>
+            <!-- terminal bg -->
+            <rect x="16" y="12" width="368" height="156" rx="4" fill="#0A1018" stroke="#1A2535" stroke-width="1"/>
+            <!-- title bar -->
+            <rect x="16" y="12" width="368" height="22" rx="4" fill="#0E1822"/>
+            <rect x="16" y="26" width="368" height="8" fill="#0E1822"/>
+            <circle cx="30" cy="23" r="4" fill="#C0392B" opacity="0.7"/>
+            <circle cx="44" cy="23" r="4" fill="#D4AC0D" opacity="0.7"/>
+            <circle cx="58" cy="23" r="4" fill="#1E8449" opacity="0.7"/>
+            <text x="80" y="27" font-family="monospace" font-size="8" fill="#607080">edwin@k8s-cluster ~ llm-query</text>
+            <!-- prompt lines -->
+            <text x="26" y="52" font-family="monospace" font-size="8" fill="#3DD68C">❯</text>
+            <text x="36" y="52" font-family="monospace" font-size="8" fill="#DCE8F0">query --jira DEVOPS-1423 --k8s prod-cluster</text>
+            <text x="26" y="68" font-family="monospace" font-size="8" fill="#607080">Fetching pod status from prod-cluster...</text>
+            <!-- response box -->
+            <rect x="26" y="76" width="348" height="56" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="34" y="90" font-family="monospace" font-size="7.5" fill="#0CCEC0">● LLM Response</text>
+            <text x="34" y="103" font-family="monospace" font-size="7" fill="#A8BCC8">Pod nginx-7d4b9 is CrashLoopBackOff. Last error: OOMKilled.</text>
+            <text x="34" y="115" font-family="monospace" font-size="7" fill="#A8BCC8">Suggested fix: increase memory limit to 512Mi in deployment.yaml</text>
+            <text x="34" y="127" font-family="monospace" font-size="7" fill="#607080">Jira DEVOPS-1423 updated · MTTR estimate: ~4 min</text>
+            <!-- cursor -->
+            <text x="26" y="148" font-family="monospace" font-size="8" fill="#3DD68C">❯</text>
+            <rect x="36" y="140" width="6" height="11" fill="#0CCEC0" opacity="0.9">
+              <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+            </rect>
+            <!-- right side metrics -->
+            <rect x="310" y="52" width="72" height="36" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="346" y="63" font-family="monospace" font-size="6.5" fill="#607080" text-anchor="middle">MTTR</text>
+            <text x="346" y="78" font-family="monospace" font-size="13" fill="#0CCEC0" font-weight="bold" text-anchor="middle">-35%</text>
+          </svg>
+          <div class="proj-visual-overlay"></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-num">01 / AI Infrastructure</div>
+          <div class="proj-title">Air-Gapped Enterprise AI Assistant</div>
+          <div class="proj-desc">
+            Fully offline ChatGPT alternative running on CPU servers — no GPU, no cloud API.
+            Engineers query Kubernetes state, triage Jira tickets, and pull logs in plain English.
+            Replaced all AI SaaS subscriptions.
+          </div>
+          <div class="proj-pills">
+            <span class="pill">35% MTTR reduction</span>
+            <span class="pill">100+ daily users</span>
+            <span class="pill">$0 SaaS cost</span>
+          </div>
+          <div class="proj-stack">
+            <span class="stk">llama.cpp</span><span class="stk">MCP</span><span class="stk">RAG</span>
+            <span class="stk">Qwen</span><span class="stk">Kubernetes</span><span class="stk">Ollama</span><span class="stk">Python</span>
+          </div>
+          <a href="https://github.com/edwin-a/devops-ai-assistant" class="proj-link">github.com/edwin-a/devops-ai-assistant</a>
+        </div>
+      </div>
+
+      <div class="proj reveal d2">
+        <!-- Compliance Visual: Grafana-style dashboard -->
+        <div class="proj-visual">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="180" fill="#070C10"/>
+            <!-- header bar -->
+            <rect x="0" y="0" width="400" height="28" fill="#0A1018"/>
+            <text x="14" y="18" font-family="monospace" font-size="9" fill="#0CCEC0" font-weight="bold">CIS Compliance Dashboard</text>
+            <rect x="310" y="7" width="72" height="14" rx="2" fill="#0E4D3A"/>
+            <text x="346" y="18" font-family="monospace" font-size="7.5" fill="#3DD68C" text-anchor="middle">● LIVE</text>
+            <!-- stat cards row -->
+            <rect x="10" y="36" width="78" height="40" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="49" y="50" font-family="monospace" font-size="7" fill="#607080" text-anchor="middle">CONTROLS</text>
+            <text x="49" y="67" font-family="monospace" font-size="14" fill="#0CCEC0" font-weight="bold" text-anchor="middle">300+</text>
+
+            <rect x="96" y="36" width="78" height="40" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="135" y="50" font-family="monospace" font-size="7" fill="#607080" text-anchor="middle">PASSING</text>
+            <text x="135" y="67" font-family="monospace" font-size="14" fill="#3DD68C" font-weight="bold" text-anchor="middle">94.2%</text>
+
+            <rect x="182" y="36" width="78" height="40" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="221" y="50" font-family="monospace" font-size="7" fill="#607080" text-anchor="middle">CRITICAL</text>
+            <text x="221" y="67" font-family="monospace" font-size="14" fill="#E8A838" font-weight="bold" text-anchor="middle">0</text>
+
+            <rect x="268" y="36" width="122" height="40" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="329" y="50" font-family="monospace" font-size="7" fill="#607080" text-anchor="middle">AUDIT EFFORT SAVED</text>
+            <text x="329" y="67" font-family="monospace" font-size="14" fill="#3F8EF5" font-weight="bold" text-anchor="middle">70%</text>
+
+            <!-- mini bar chart -->
+            <text x="14" y="96" font-family="monospace" font-size="7" fill="#344455">TRGM / IM8 Compliance by Framework</text>
+            <!-- bars -->
+            <rect x="14" y="120" width="50" height="36" rx="1" fill="#0CCEC0" opacity="0.85"/>
+            <rect x="72" y="108" width="50" height="48" rx="1" fill="#0CCEC0" opacity="0.7"/>
+            <rect x="130" y="115" width="50" height="41" rx="1" fill="#3F8EF5" opacity="0.7"/>
+            <rect x="188" y="100" width="50" height="56" rx="1" fill="#0CCEC0" opacity="0.6"/>
+            <rect x="246" y="112" width="50" height="44" rx="1" fill="#3DD68C" opacity="0.7"/>
+            <rect x="304" y="105" width="50" height="51" rx="1" fill="#0CCEC0" opacity="0.75"/>
+            <text x="39" y="168" font-family="monospace" font-size="6" fill="#344455" text-anchor="middle">K8s</text>
+            <text x="97" y="168" font-family="monospace" font-size="6" fill="#344455" text-anchor="middle">AWS</text>
+            <text x="155" y="168" font-family="monospace" font-size="6" fill="#344455" text-anchor="middle">MySQL</text>
+            <text x="213" y="168" font-family="monospace" font-size="6" fill="#344455" text-anchor="middle">OS</text>
+            <text x="271" y="168" font-family="monospace" font-size="6" fill="#344455" text-anchor="middle">Network</text>
+            <text x="329" y="168" font-family="monospace" font-size="6" fill="#344455" text-anchor="middle">IAM</text>
+          </svg>
+          <div class="proj-visual-overlay"></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-num">02 / Compliance</div>
+          <div class="proj-title">Compliance Automation Platform</div>
+          <div class="proj-desc">
+            Automated CIS Benchmark scanning across 300+ controls, mapped to TRGM and IM8 regulatory frameworks.
+            Real-time Grafana dashboards replaced quarterly spreadsheet marathons.
+          </div>
+          <div class="proj-pills">
+            <span class="pill">70% less audit effort</span>
+            <span class="pill">60% faster prep</span>
+            <span class="pill">300+ controls</span>
+          </div>
+          <div class="proj-stack">
+            <span class="stk">OpenSCAP</span><span class="stk">kube-bench</span><span class="stk">Trivy</span>
+            <span class="stk">Terraform</span><span class="stk">Grafana</span><span class="stk">AWS</span><span class="stk">Python</span>
+          </div>
+          <a href="https://github.com/edwin-a/compliance-platform" class="proj-link">github.com/edwin-a/compliance-platform</a>
+        </div>
+      </div>
+
+      <div class="proj reveal d3">
+        <!-- K8s HA Platform Visual: architecture diagram -->
+        <div class="proj-visual">
+          <svg viewBox="0 0 400 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+            <rect width="400" height="180" fill="#070C10"/>
+            <!-- title -->
+            <text x="14" y="16" font-family="monospace" font-size="8" fill="#344455">HA Kubernetes Topology</text>
+            <!-- HAProxy -->
+            <rect x="158" y="20" width="84" height="22" rx="2" fill="#0D1B28" stroke="#0CCEC0" stroke-width="1"/>
+            <text x="200" y="35" font-family="monospace" font-size="7.5" fill="#0CCEC0" text-anchor="middle">HAProxy LB</text>
+            <!-- lines to masters -->
+            <line x1="200" y1="42" x2="80" y2="72" stroke="#1A2535" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="200" y1="42" x2="200" y2="72" stroke="#1A2535" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="200" y1="42" x2="320" y2="72" stroke="#1A2535" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- master nodes -->
+            <rect x="34" y="72" width="92" height="24" rx="2" fill="#0D1B28" stroke="#3F8EF5" stroke-width="1"/>
+            <text x="80" y="87" font-family="monospace" font-size="7" fill="#3F8EF5" text-anchor="middle">● Master-1</text>
+            <rect x="154" y="72" width="92" height="24" rx="2" fill="#0D1B28" stroke="#3F8EF5" stroke-width="1.5"/>
+            <text x="200" y="87" font-family="monospace" font-size="7" fill="#3F8EF5" text-anchor="middle">● Master-2</text>
+            <rect x="274" y="72" width="92" height="24" rx="2" fill="#0D1B28" stroke="#3F8EF5" stroke-width="1"/>
+            <text x="320" y="87" font-family="monospace" font-size="7" fill="#3F8EF5" text-anchor="middle">● Master-3</text>
+            <!-- lines to workers -->
+            <line x1="80" y1="96" x2="60" y2="118" stroke="#1A2535" stroke-width="1"/>
+            <line x1="80" y1="96" x2="130" y2="118" stroke="#1A2535" stroke-width="1"/>
+            <line x1="200" y1="96" x2="200" y2="118" stroke="#1A2535" stroke-width="1"/>
+            <line x1="320" y1="96" x2="270" y2="118" stroke="#1A2535" stroke-width="1"/>
+            <line x1="320" y1="96" x2="340" y2="118" stroke="#1A2535" stroke-width="1"/>
+            <!-- worker nodes -->
+            <rect x="26" y="118" width="68" height="20" rx="2" fill="#0A1018" stroke="#1A2535" stroke-width="1"/>
+            <text x="60" y="131" font-family="monospace" font-size="6.5" fill="#607080" text-anchor="middle">worker-01</text>
+            <rect x="100" y="118" width="68" height="20" rx="2" fill="#0A1018" stroke="#1A2535" stroke-width="1"/>
+            <text x="134" y="131" font-family="monospace" font-size="6.5" fill="#607080" text-anchor="middle">worker-02</text>
+            <rect x="166" y="118" width="68" height="20" rx="2" fill="#0A1018" stroke="#1A2535" stroke-width="1"/>
+            <text x="200" y="131" font-family="monospace" font-size="6.5" fill="#607080" text-anchor="middle">worker-03</text>
+            <rect x="236" y="118" width="68" height="20" rx="2" fill="#0A1018" stroke="#1A2535" stroke-width="1"/>
+            <text x="270" y="131" font-family="monospace" font-size="6.5" fill="#607080" text-anchor="middle">worker-04</text>
+            <rect x="308" y="118" width="68" height="20" rx="2" fill="#0A1018" stroke="#1A2535" stroke-width="1"/>
+            <text x="342" y="131" font-family="monospace" font-size="6.5" fill="#607080" text-anchor="middle">worker-05</text>
+            <!-- uptime badge -->
+            <rect x="14" y="148" width="100" height="20" rx="2" fill="#0E3020" stroke="#3DD68C" stroke-width="1"/>
+            <text x="64" y="161" font-family="monospace" font-size="7" fill="#3DD68C" text-anchor="middle">● 99.9% uptime</text>
+            <!-- ArgoCD badge -->
+            <rect x="122" y="148" width="80" height="20" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="162" y="161" font-family="monospace" font-size="7" fill="#A8BCC8" text-anchor="middle">ArgoCD GitOps</text>
+            <!-- container count -->
+            <rect x="210" y="148" width="80" height="20" rx="2" fill="#0D1B28" stroke="#1A2535" stroke-width="1"/>
+            <text x="250" y="161" font-family="monospace" font-size="7" fill="#A8BCC8" text-anchor="middle">500+ containers</text>
+            <!-- etcd -->
+            <rect x="298" y="148" width="90" height="20" rx="2" fill="#0D1B28" stroke="#3F8EF5" stroke-width="1"/>
+            <text x="343" y="161" font-family="monospace" font-size="7" fill="#3F8EF5" text-anchor="middle">etcd cluster ×3</text>
+          </svg>
+          <div class="proj-visual-overlay"></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-num">03 / Platform</div>
+          <div class="proj-title">HA Kubernetes Platform</div>
+          <div class="proj-desc">
+            Rebuilt a fragile single-master cluster into a production-grade HA platform —
+            multi-master topology, HAProxy, ArgoCD for GitOps, full observability.
+            No more nervous control-plane patching.
+          </div>
+          <div class="proj-pills">
+            <span class="pill">99.9% uptime</span>
+            <span class="pill">500+ containers</span>
+            <span class="pill">Zero config drift</span>
+          </div>
+          <div class="proj-stack">
+            <span class="stk">kubeadm</span><span class="stk">OpenShift</span><span class="stk">Helm</span>
+            <span class="stk">ArgoCD</span><span class="stk">Prometheus</span><span class="stk">Grafana</span><span class="stk">ELK</span>
+          </div>
+          <a href="https://github.com/edwin-a/k8s-platform" class="proj-link">github.com/edwin-a/k8s-platform</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACT ────────────────────────────────── -->
+<section id="impact">
+  <div class="wrap">
+    <div class="sec-eyebrow reveal">Impact</div>
+    <h2 class="reveal">Numbers that<br/><em>speak for themselves</em></h2>
+
+    <div class="impact-grid reveal d1">
+      <div class="imp"><div class="imp-n">70%</div><div class="imp-what">Less audit effort</div><div class="imp-how">CIS/TRGM/IM8 pipelines automated across OpenStack, Kubernetes &amp; MySQL</div></div>
+      <div class="imp"><div class="imp-n">60%</div><div class="imp-what">Faster audit prep</div><div class="imp-how">Real-time compliance dashboards replaced quarterly manual reviews</div></div>
+      <div class="imp"><div class="imp-n">50%</div><div class="imp-what">Less downtime</div><div class="imp-how">SRE on-call discipline for a 1M+ daily active users platform</div></div>
+      <div class="imp"><div class="imp-n">45%</div><div class="imp-what">Fewer vulnerabilities</div><div class="imp-how">SonarQube DevSecOps gates across 15+ microservices</div></div>
+      <div class="imp"><div class="imp-n">40%</div><div class="imp-what">Faster detection</div><div class="imp-how">Prometheus + Grafana + ELK built from scratch across 30+ EC2 instances</div></div>
+      <div class="imp"><div class="imp-n">35%</div><div class="imp-what">Lower MTTR</div><div class="imp-how">MCP + RAG LLM integration with Kubernetes and Jira for incident triage</div></div>
+      <div class="imp"><div class="imp-n">73%</div><div class="imp-what">Faster deploys</div><div class="imp-how">CI/CD rebuilt — 45-minute pipeline down to 12 minutes</div></div>
+      <div class="imp"><div class="imp-n">100%</div><div class="imp-what">AI SaaS eliminated</div><div class="imp-how">Air-gapped llama.cpp on CPU-only servers replaced all cloud AI subscriptions</div></div>
+      <div class="imp"><div class="imp-n">99.9%</div><div class="imp-what">Cluster uptime</div><div class="imp-how">HA multi-master Kubernetes, load-balanced control plane, 500+ containers</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ───────────────────────────────── -->
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-eyebrow reveal" style="justify-content:center;">Contact</div>
+    <h2 class="reveal" style="text-align:center;">Let's <em>connect</em></h2>
+    <p class="reveal d1" style="text-align:center;color:var(--muted);margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;">
+      Open to remote roles in DevOps · Platform Engineering · SRE
+    </p>
+
+    <div class="contact-wrap reveal d2">
+      <div class="terminal">
+        <div class="t-bar">
+          <div class="d r"></div><div class="d y"></div><div class="d g"></div>
+          <div class="t-label">edwin@platform  —  contact.sh</div>
+        </div>
+        <div class="t-body">
+          <div class="tl"><span class="pr">❯</span> <span class="cm">cat contact.json</span></div>
+          <div class="tl">{</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"name"</span>:&nbsp;&nbsp;&nbsp;&nbsp; <span class="v">"Edwin A"</span>,</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"role"</span>:&nbsp;&nbsp;&nbsp;&nbsp; <span class="v">"DevOps Lead · Platform Engineer · SRE"</span>,</div>
+		  <div class="tl">&nbsp;&nbsp;<span class="k">"email"</span>:&nbsp;&nbsp;&nbsp; <span class="v"><a href="mailto:edwinkerk1@gmail.com">"edwinkerk1@gmail.com"</a></span>,</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"phone"</span>:&nbsp;&nbsp;&nbsp; <span class="v">"+91-9444528270"</span>,</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"location"</span>: <span class="v">"Coimbatore, India"</span>,</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"linkedin"</span>: <span class="v"><a href="https://linkedin.com/in/edwin-a" target="_blank">"linkedin.com/in/edwin-a"</a></span>,</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"github"</span>:&nbsp;&nbsp; <span class="v"><a href="https://github.com/edwin-a" target="_blank">"github.com/edwin-a"</a></span>,</div>
+          <div class="tl">&nbsp;&nbsp;<span class="k">"open_to"</span>:&nbsp; <span class="v">"Remote / Relocation"</span></div>
+          <div class="tl">}</div>
+          <div class="tl" style="margin-top:10px"><span class="pr">❯</span> <span class="cm">echo $STATUS</span></div>
+          <div class="tl"><span class="c"># Available for DevOps · Platform Engineering · SRE roles</span></div>
+          <div class="tl" style="margin-top:6px"><span class="pr">❯</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ────────────────────────────────── -->
+<footer>
+  <div class="ft-l">Edwin A — <span>DevOps Lead &amp; Platform Engineer</span></div>
+  <div class="ft-r">Coimbatore, India · Open to remote</div>
+</footer>
+
+<script>
+/* ── SCROLL REVEAL ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const els = document.querySelectorAll('.reveal');
+  setTimeout(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+    els.forEach(el => obs.observe(el));
+    els.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('in');
+    });
+  }, 100);
+});
+
+/* ── HERO CANVAS — lightweight network/node parallax ── */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  let W, H, mouse = { x: 0.5, y: 0.5 }, target = { x: 0.5, y: 0.5 }, raf;
+
+  const TEAL  = 'rgba(12,206,192,';
+  const BLUE  = 'rgba(63,142,245,';
+  const NODES = [];
+  const COUNT = 52;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function initNodes() {
+    NODES.length = 0;
+    for (let i = 0; i < COUNT; i++) {
+      NODES.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.8 + 0.5,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        depth: Math.random() * 0.6 + 0.2,       // parallax depth 0.2–0.8
+        col: Math.random() > 0.6 ? TEAL : BLUE,
+        opacity: Math.random() * 0.35 + 0.1,
+      });
+    }
+  }
+
+  window.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    target.x = (e.clientX - rect.left) / W;
+    target.y = (e.clientY - rect.top)  / H;
+  });
+
+  function draw() {
+    // ease mouse
+    mouse.x += (target.x - mouse.x) * 0.06;
+    mouse.y += (target.y - mouse.y) * 0.06;
+
+    const offsetX = (mouse.x - 0.5) * 28;
+    const offsetY = (mouse.y - 0.5) * 14;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // move nodes
+    NODES.forEach(n => {
+      n.x += n.vx + offsetX * n.depth * 0.004;
+      n.y += n.vy + offsetY * n.depth * 0.004;
+      if (n.x < 0) n.x = W;
+      if (n.x > W) n.x = 0;
+      if (n.y < 0) n.y = H;
+      if (n.y > H) n.y = 0;
+    });
+
+    // draw edges
+    const LINK_DIST = 110;
+    for (let i = 0; i < COUNT; i++) {
+      for (let j = i + 1; j < COUNT; j++) {
+        const dx = NODES[i].x - NODES[j].x;
+        const dy = NODES[i].y - NODES[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < LINK_DIST) {
+          const alpha = (1 - d / LINK_DIST) * 0.12;
+          ctx.beginPath();
+          ctx.moveTo(NODES[i].x, NODES[i].y);
+          ctx.lineTo(NODES[j].x, NODES[j].y);
+          ctx.strokeStyle = TEAL + alpha + ')';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // draw nodes
+    NODES.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = n.col + n.opacity + ')';
+      ctx.fill();
+    });
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); initNodes(); });
+  resize();
+  initNodes();
+  draw();
+})();
+
+window.setPhoto = (src) => {
+  const f = document.getElementById('photoFrame');
+  f.innerHTML = '<img src="' + src + '" alt="Edwin A"/>';
+};
+</script>
+</body>
+</html>
